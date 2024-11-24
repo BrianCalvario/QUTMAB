@@ -1,12 +1,6 @@
 import { Schema,model } from "mongoose";
+import { IQuestion } from "../@Types/GlobalTypes";
 
-interface IQuestion{
-    title:String,
-    type: "radio" | "checkbox" | "select" | "text",
-    isMandatory:boolean,
-    questionnaireId:Schema.Types.ObjectId | string;
-
-}
 
 const QuestionSchema = new Schema<IQuestion>({
     title:{

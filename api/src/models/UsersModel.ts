@@ -1,12 +1,6 @@
 
 import { Schema, model} from "mongoose"
-interface IUser {
-    name:string;
-    email:string;
-    lastname:string;
-    password:string;
-    rol: "administrador" | "client"
-}
+
 
 const UserSchema = new Schema<IUser>({
     name:{
