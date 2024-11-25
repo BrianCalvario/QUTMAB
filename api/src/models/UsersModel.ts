@@ -1,13 +1,13 @@
 
 import { Schema, model} from "mongoose"
-
+import { IUser } from "../@Types/GlobalTypes";
 
 const UserSchema = new Schema<IUser>({
     name:{
         type:String,
         required:true
     },
-    lastname:{
+    lastnames:{
         type:String,
         required:true
     },
@@ -26,4 +26,4 @@ const UserSchema = new Schema<IUser>({
     }
 
 });
-export const UserModel= model("users,UserSchema");
+export const UserModel= model("users",UserSchema);

@@ -1,8 +1,8 @@
 import { Schema } from "mongoose";
-interface IUser {
+export interface IUser {
     name:string;
     email:string;
-    lastname:string;
+    lastnames:string;
     password:string;
     rol: "administrador" | "client"
 }
