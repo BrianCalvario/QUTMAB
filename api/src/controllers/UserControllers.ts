@@ -47,6 +47,7 @@ Promise<any> => {
 } 
 export const sining = async (req: Request, res:  Response) :Promise<any> => {
     //correo y contraseña
+    
     //verificat que el usuario existe
     const user = await UserModel.findOne({email:req.body.email.password});
     //si no existe devuelve error 
