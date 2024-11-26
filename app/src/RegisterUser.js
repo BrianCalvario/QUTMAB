@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import axios from "axios"
 
 export const RegisterUser = () => {
     const [data, setData] = useState({});
@@ -15,10 +16,14 @@ export const RegisterUser = () => {
         console.log(nData)
     };
 
-    const onSubmit = () => {
+    const onSubmit = async() => {
         /* Enviar data al server */
-        console.log(data)
+        try {
+            await axios.post("http://localhost: 4000/user/create", data)
         navigate("/")
+    } catch (error) {
+        alert("Hubo un error")
+    }
     }
     return (
         <Container>
