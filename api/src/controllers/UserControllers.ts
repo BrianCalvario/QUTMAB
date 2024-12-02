@@ -45,18 +45,19 @@ Promise<any> => {
         return res.status(500).json ({ msg: "Hubo un error al crear el usuario"})
     }
 } 
-export const sining = async (req: Request, res:  Response) :Promise<any> => {
+export const sininIg = async (req: Request, res:  Response) :Promise<any> => {
     try {
         const user = await UserModel.findOne({email:req.body.email, password:req.body.password})
         
-       if(user){
-        const token2 = jwt.sign(JSON.stringify(user),"pocoyo");
-        return res.status(200).json({msg: "Sesion iniciada con exito", token2})
-       }else{
+       if(!user){
         return res.status(500).json({
             msg:"No hay coincidencias en el sistema"
         })
+        return;
        }
+       const token = jwt.sign (JSON.stringify(user),"pocoyo");
+       res.status(200).json({msg:"secion iniciada con exito",token})
+       return;
     } catch (error) {
         console.log(error);
         return res.status(500).json({

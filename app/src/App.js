@@ -1,59 +1,73 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import axios from "axios";
+import { userNavigate } from "react-router-dom";
 
 
 const App = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
   const onChange = (e) => {
-    e.preventDefault();
-    const loginData = data;
-    loginData[e.target.name] = e.target.value;
-    setData(loginData)
-  }
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-  const onSubmit = () => {
-    //Peticion a la DB
-    console.log(data)
-  }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/user/sing-in", data);
+
+      if (response.data.success) {
+        alert("correcto");
+      } else {
+        alert("incorrecta");
+      }
+    } catch (error) {
+      alert("incorrecta");
+      console.error("Error:", error);
+    }
+  };
 
   return (
-    <Container className="mt-3">
-      <Card className="mb-5" style={{ width: "30rem", margin: "auto" }}>
-        <Card.Body>
-          <Card.Title className="text-center">
-            Bienvenido a cuestionarios UTMA
-          </Card.Title>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Correo electronico:</Form.Label>
-              <Form.Control placeholder="Ingresa tu correo electronico" type="email" name="email" onChange={onChange} /* Texto informativo para el usuario */ />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control placeholder="Ingresa tu contraseña" type="password" name="password" onChange={onChange} />
-            </Form.Group>
-
-            <Row className="text-center">
-              <Col>
-                <Button onClick={() => onSubmit()}>Ingresar</Button>
-              </Col>
-              <Col>
-                <p>¿No tienes cuenta? <a href="/register-user">¡Registrate!</a></p>
-
-              </Col>
-            </Row>
-            <Row>
-              <p>¿Olvidaste tu contraseña? <a href="/recover-password">Recuperala aquí</a></p>
-            </Row>
-
-          </Form>
-        </Card.Body>
-      </Card>
-
-    </Container>
+    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
+      <h2>Iniciar Sesión</h2>
+      <form onSubmit={onSubmit}>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Correo electrónico:</label>
+          <input
+            type="email"
+            name="email"
+            value={data.email}
+            onChange={onChange}
+            placeholder="Ingresa tu correo"
+            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            required
+          />
+        </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Contraseña:</label>
+          <input
+            type="password"
+            name="password"
+            value={data.password}
+            onChange={onChange}
+            placeholder="Ingresa tu contraseña"
+            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            required
+          />
+        </div>
+        <button type="submit" style={{ padding: "10px 20px" }}>
+          Enviar
+        </button>
+      </form>
+    </div>
   );
-}
+};
 
 export default App;

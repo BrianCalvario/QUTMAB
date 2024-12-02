@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import { registerUsers } from "./controllers/UserControllers";
+import { sign } from "jsonwebtoken";
 
 
 const app: Application = express();
@@ -16,4 +17,5 @@ app.get("/", (_req: Request, res: Response) => {
 
 //Usuario
 app.post("/users/create",registerUsers)
+app.post("/users/sign-in", )
 export default app;
